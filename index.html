@@ -1,0 +1,1067 @@
+<html>
+ 	<head>
+ 		<title>JAZZARI</title>
+ 		<meta name="robots" content="noindex">
+	  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	  <script type="text/javascript" src="third_party/d3/d3.min.js"></script>
+	  <script type="text/javascript" src="third_party/Tone/tonejs.min.js"></script>
+		<script type="text/javascript" src="third_party/codemirror/codemirror.js"></script>
+		<script type="text/javascript" src="third_party/codemirror/mode/javascript.js"></script>
+    <script type="text/javascript" src="third_party/codemirror/keymap/sublime.js"></script>
+    <script type="text/javascript" src="third_party/codemirror/addon/comment/comment.js"></script>
+    <script type="text/javascript" src="third_party/lodash/lodash.js"></script>
+    <script type="text/javascript" src="third_party/microevent/microevent.js"></script>
+    <script type="text/javascript" src="third_party/jsmidgen-master/lib/jsmidgen.js"></script>
+    <script type="text/javascript" src="js/utils.js"></script>
+    <script type="text/javascript" src="js/score.js"></script>
+    <script type="text/javascript" src="js/programmer.js"></script>
+    <script type="text/javascript" src="js/scoreRenderer.js"></script>
+
+    <link href="https://fonts.googleapis.com/css?family=Voltaire" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono:700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Bungee+Shade" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <style>
+      .material-icons {
+        vertical-align: middle;
+      }
+    </style>
+
+		<style>
+			@import url("style.css");
+			@import url("third_party/fontello-f7426019/css/fontello.css");
+			@import url("third_party/fontello-f7426019/css/animation.css");
+		</style>
+
+		<script src="third_party/JS-Interpreter-master/acorn_interpreter.js"></script>
+ 		<link rel="icon" type="" href="favicon.ico">
+ 		<link rel="stylesheet" href="third_party/codemirror/codemirror.css">
+ 		<link rel="stylesheet" href="third_party/codemirror/theme/material.css">
+
+
+    <!-- Facebook -->
+    <meta itemprop="name" content="JAZZARI">
+    <meta itemprop="description" content="A programmable band in your browser">
+    <meta itemprop="image" content="https://jackschaedler.github.io/jazzari/social/thumbnail.png">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@JackSchaedler">
+    <meta name="twitter:title" content="JAZZARI">
+    <meta name="twitter:description" content="A programmable band in your browser">
+    <meta name="twitter:creator" content="@JackSchaedler">
+    <meta name="twitter:image" content="https://jackschaedler.github.io/jazzari/social/thumbnail.png">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="JAZZARI">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://jackschaedler.github.io/jazzari/">
+    <meta property="og:image" content="https://jackschaedler.github.io/jazzari/social/thumbnail.png">
+    <meta property="og:description" content="A programmable band in your browser">
+
+    <script>
+      // (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      // (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      // m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      // })(window,document,'script','https://www.google-analytics.com/analytics.js','ganal');
+
+      // ganal('create', 'UA-59785365-4', 'auto');
+      // ganal('send', 'pageview');
+    </script>
+
+	</head>
+
+
+	<body onload="" style="margin: 0px; width: 100%; background-color: #1b160f; overflow:hidden; max-width: 1200px; max-height: 800px">
+
+		<div style="text-align:center; background: linear-gradient(Lavender, PapayaWhip 20%, PeachPuff 30%); width: 720px; height: 100%; margin-right: auto;">
+			<div style="width: 100%; display: inline-block; text-align: center">
+
+        <a href="https://github.com/jackschaedler/jazzari" style="position: absolute; top: 5px; left: 675px; opacity: 0.5; z-index: 1000">
+          <i style="font-size: 25px; margin: 5px; cursor: pointer" class="icon-github-circled-alt2 aboutLink"></i>
+        </a>
+        <a href="https://twitter.com/jackschaedler" style="position: absolute; top: 5px; left: 645px; opacity: 0.5; z-index: 1000">
+          <i style="font-size: 25px; margin: 5px; cursor: pointer" class="icon-twitter aboutLink"></i>
+        </a>
+
+				<div style="font-family: Voltaire; font-size: 45px; color: #222; padding-top: 25px; opacity: 0.85"><span style="font-family: Bungee Shade; font-size: 60px; color:#ed5107; padding-top:  0px; opacity: 0.85">JAZZARI</span></div>
+
+				<div style="font-family: Voltaire; font-size: 18px; color: #777; padding-bottom: 30px">
+					<span style="color:#ed5107; opacity: 0.7">THE</span>
+					<span style="color:#ed5107; opacity: 0.7">PROGRAMMABLE</span>
+					<span style="color:#ed5107; opacity: 0.7">TRIO</span>
+				</div>
+
+        <div style="display: flex; align-items: center; justify-content: center; font-size: 12px; flex-direction: column; position: fixed; top: 10px; left: 10px">
+          <button id="exportMidi" class="bigButton"> <i class="icon-download"></i> Download MIDI </button>
+          <a href="about.html"><button id="learnMore" class="bigButton"> <i class="icon-book"></i> Learn More </button></a>
+        </div>
+
+        <a id="invisibleDownloadLink" style="display:none" download="jazzari.mid"></a>
+
+        <script type="text/javascript">
+          document.getElementById("exportMidi").addEventListener("click", function() {
+            function scoreToFlatListOfOnOffEvents(score, rootMidi) {
+              var notes = score.notes();
+              var onOffEvents = [];
+              notes.forEach(function(note) {
+                onOffEvents.push(
+                  { type:"on",
+                    time: note.time,
+                    row: note.row+rootMidi,
+                    vol: note.vol});
+                onOffEvents.push(
+                  { type:"off",
+                    time: note.end,
+                    row: note.row+rootMidi,
+                    vol: note.vol});
+              });
+
+              onOffEvents.sort(function(a, b) {
+                return a.time - b.time;
+              });
+
+              return onOffEvents;
+            }
+
+            function trackFromScore(score, rootMidi) {
+              var track = new Midi.Track();
+              track.setTempo(Tone.Transport.bpm.value);
+              var onOffEvents = scoreToFlatListOfOnOffEvents(score, rootMidi);
+              var lastEventTime = 0;
+              var TICKS_PER_BEAT = 128;
+
+              onOffEvents.forEach(function(e) {
+                var time = e.time - lastEventTime;
+                var timeInTicks = Math.round(time * TICKS_PER_BEAT);
+                if (e.type == "on") {
+                  track.addNoteOn(0, e.row, timeInTicks, e.vol * 100);
+                } else {
+                  track.addNoteOff(0, e.row, timeInTicks, e.vol * 100);
+                }
+                lastEventTime = e.time;
+              });
+
+              return track;
+            }
+
+            var file = new Midi.File();
+
+            file.addTrack(trackFromScore(drumScore, 36));
+            file.addTrack(trackFromScore(keysScore, 60));
+            file.addTrack(trackFromScore(bassScore, 36));
+
+            var content = "data:audio/midi;base64," + btoa(file.toBytes());
+            document.getElementById("invisibleDownloadLink").href = content;
+            document.getElementById("invisibleDownloadLink").click();
+          });
+        </script>
+
+				<div style="width: 100%; font-family: Voltaire;">
+					<div style="width: 100%">
+
+            <div style="position: fixed; left: 0px; bottom: 0px">
+  						<div id="characters" style="display: flex; flex-direction: row; width: 100%; height: 100px; margin-top: 20px">
+                <div id="drumCharacter" style="position: relative; width: 240px; cursor: pointer">
+                  <img src="images/defaultbody.png" width="110" height="110" style="position: absolute; bottom: 20px; left: 70px"></img>
+
+                  <img src="images/drummachine.png" width="240" height="50" style="position: absolute; bottom: 0px; left: 0px"></img>
+
+                  <img id="drummerHead" src="images/defaulthead.png" width="110" height="110" style="position: absolute; bottom: 20px; left: 70px"></img>
+                </div>
+
+                <div id="keysCharacter" style="position: relative; width: 240px; cursor: pointer;">
+                  <img src="images/defaultbody.png" width="110" height="110" style="position: absolute; bottom: 10px; left: 70px"></img>
+
+                  <img id="keysHead" src="images/defaultkeyshead.png" width="110" height="110" style="position: absolute; bottom: 10px; left: 70px"></img>
+
+                  <img src="images/keysmachine.png" width="240" height="50" style="position: absolute; bottom: 0px; left: 0px"></img>
+                </div>
+
+                <div id="bassCharacter" style="position: relative; width: 240px; cursor: pointer">
+                  <img src="images/defaultbody.png" width="110" height="110" style="position: absolute; bottom: 20px; left: 70px"></img>
+
+                  <img src="images/bassmachine.png" width="240" height="50" style="position: absolute; bottom: 0px; left: 0px"></img>
+
+                  <img id="bassHead" src="images/defaultbasshead.png" width="110" height="110" style="position: absolute; bottom: 20px; left: 70px"></img>
+                </div>
+  					  </div>
+
+  						<div id="tabs" style="display: flex; flex-direction: row; width: 100%; font-size: 18px;">
+  							<div id="drumsButton" style="font-family: Voltaire; width: 100%; height: 30px; line-height: 30px; background-color: #e9c94c; color: black; cursor: pointer; position: relative; z-index: 999">
+  								DRUMS
+
+                  <div id="" class="tempoControl" style="position: absolute; top:
+                  0px; left: 5px; font-size: 12px">
+                    <input id="tempo" type="number" name="tempo" step="1" min="50" max="200" required style="margin-right: 4px; border-radius: 5px; border: none; padding: 2px; background-color: #333; color: #e9c94c; font-family: Voltaire; font-weight: bold; font-size: 14px; width: 3em">bpm
+                  </div>
+
+                  <script type="text/javascript">
+                    document.getElementById("tempo").addEventListener("change", function(val) {
+                      var requestedTempo = document.getElementById("tempo").value;
+                      requestedTempo = isNaN(requestedTempo)
+                        ? 100
+                        : requestedTempo;
+
+                      var allowableTempo = Math.min(Math.max(50, requestedTempo), 200);
+                      if (requestedTempo != allowableTempo) {
+                        document.getElementById("tempo").value = allowableTempo;
+                      }
+                      Tone.Transport.bpm.value = allowableTempo;
+                    });
+                  </script>
+
+                  <div title="Generate new random numbers" id="drumSeedButton" class="seedButton" style="position: absolute; top: 7px; right: 30px; user-select:none; visibility: hidden;">
+                    <i class="material-icons" style="font-size: 18px">casino</i>
+                  </div>
+
+                  <div title="Mute Drums" id="drumMuteButton" class="muteButton" style="position: absolute; top: 7px; right: 5px; user-select: none">
+                    <i class="icon-volume-low"></i>
+                  </div>
+  							</div>
+  							<div id="keysButton" style="font-family: Voltaire; width: 100%; height: 30px; line-height: 30px; background-color: #e5733d; color: black; cursor: pointer; position: relative; z-index: 999;">
+  								KEYS
+
+                  <div title="Generate new random numbers" id="keysSeedButton" class="seedButton" style="position: absolute; top: 7px; right: 30px; user-select:none; visibility: hidden">
+                    <i class="material-icons" style="font-size: 18px">casino</i>
+                  </div>
+
+                  <div title="Mute Keys" id="keysMuteButton" class="muteButton" style="position: absolute; top: 7px; right: 5px; user-select: none">
+                    <i class="icon-volume-low"></i>
+                  </div>
+  							</div>
+  							<div id="bassButton" style="font-family: Voltaire; width: 100%; height: 30px; line-height: 30px; background-color: #90ab59; color: black; cursor: pointer; position: relative; z-index: 999">
+  								BASS
+
+                  <div title="Generate new random numbers" id="bassSeedButton" class="seedButton" style="position: absolute; top: 7px; right: 30px; user-select:none; visibility: hidden">
+                    <i class="material-icons" style="font-size: 18px">casino</i>
+                  </div>
+
+                  <div title="Mute Bass" id="bassMuteButton" class="muteButton" style="position: absolute; top: 7px; right: 5px; user-select: none">
+                    <i class="icon-volume-low"></i>
+                  </div>
+  							</div>
+  						</div>
+
+              <div id="scoreOverviews" style="display: flex; flex-direction: row; width: 100%; font-size: 18px; background-color: none;">
+                <div style="position: relative">
+                  <canvas id="drumOverviewCanvas" class="svgWithText" width="240" height="72" style="margin: 0px; cursor: pointer; width: 240; height: 72px; background-color: none; border-bottom: solid 2px #e9c94c;" data-logical-width="240" data-logical-height="72">
+                  </canvas>
+                  <div id="drumOverviewCanvasPlayhead" style="width: 2px; height: 100%; background-color: #e9c94c; position: absolute; top:0px; left: 0px"></div>
+                </div>
+
+                <div style="position: relative">
+                  <canvas id="keysOverviewCanvas" class="svgWithText" width="240" height="72" style="margin: 0px; cursor: pointer; width: 240; height: 72px; background-color: none; border-bottom: solid 2px #e5733d" data-logical-width="240" data-logical-height="72">
+                  </canvas>
+                  <div id="keysOverviewCanvasPlayhead" style="width: 2px; height: 100%; background-color: #e5733d; position: absolute; top:0px; left: 0px"></div>
+                </div>
+
+                <div style="position: relative">
+                  <canvas id="bassOverviewCanvas" class="svgWithText" width="240" height="72" style="margin: 0px; cursor: pointer; width: 240; height: 72px; background-color: none; border-bottom: solid 2px #90ab59" data-logical-width="240" data-logical-height="72">
+                  </canvas>
+                  <div id="bassOverviewCanvasPlayhead" style="width: 2px; height: 100%; background-color: #90ab59; position: absolute; top:0px; left: 0px"></div>
+                </div>
+              </div>
+
+  						<div id="score" style="width: 100%; height: 300px; background-color: none; position: relative;">
+  							<canvas id="scoreCanvas" class="svgWithText" width="720" height="300" style="margin: 0px; cursor: default; width: 720; height: 300px; background-color: none" data-logical-width="720" data-logical-height="300">
+  							</canvas>
+
+                <div id="mainPlayhead" style="width: 2px; height: 100%; background-color: #e9c94c; position: absolute; top:0px; left: 0px"></div>
+
+                <div id="getStartedWrapper" style="position: absolute; top: 0; left: 0px; bottom: 0px; right: 0px; cursor: pointer; animation: loadingPulse 0.35s infinite; animation-timing-function: ease; animation-direction: alternate; display: none">
+                  <div id="" style="width: 100%; height: 100%; text-align: center; line-height: 300px; font-size: 60px; text-shadow: 2px 2px 2px #222; user-select: none;">
+                    <i class='icon-play'>&nbsp;</i>
+                  </div>
+                </div>
+
+                <div id="playButtonWrapper" style="position: absolute; top: 0; left: 0px; bottom: 0px; right: 0px; cursor: pointer; display: none">
+                  <div id="playbutton" style="width: 100%; height: 100%; text-align: center; line-height: 300px; font-size: 60px; text-shadow: 2px 2px 2px #222; user-select: none;">
+                    <i class='icon-play'>&nbsp;</i>
+                  </div>
+                </div>
+
+                <div id="loadingIndicator" style="position: absolute; top: 0; left: 0px; bottom: 0px; right: 0px; cursor: none;">
+                  <div id="" class="loadingSoundsIndicator" style="width: 100%; height: 100%; text-align: center; line-height: 300px; font-size: 30px; text-shadow: 2px 2px 2px #222; user-select: none; text-transform: uppercase;">
+                    Loading sounds, please wait.
+                  </div>
+                </div>
+  						</div>
+            </div>
+
+
+            <style>
+             #playbutton {
+                opacity: 0;
+                transition: opacity 0.3s;
+             }
+
+              #score:hover #playbutton {
+                opacity: 1;
+              }
+            </style>
+
+            <div id="rightProgramming" style="position:fixed; top:0px; left:720px; bottom:0px; width:480px; z-index:1000;
+            display: flex; flex-direction:column">
+
+              <div id="libraryButton" style="font-family: Voltaire; width: 100%; height: 40px; line-height: 40px; background-color: #333; color: black; cursor: pointer; font-size: 18px; position: relative">
+                LIBRARY
+              </div>
+
+              <div id="library" style="width: 100%; text-align: left; position: relative; background-color: #2c2c2c; overflow: hidden; height:380px; font-size: 14px">
+                <div id="libraryDrawer" style="position: absolute; left: 0px; transition: left 0.25s; display: flex; height: 100%">
+                  <div id="libraryMenu" style="width: 480px; overflow-y: scroll; overflow-x:hidden">
+                  </div>
+                  <div id="libraryCodemirror" style="width: 480px; height: 100%; font-weight: bold; border-left: solid 1px #364248; font-family: Ubuntu Mono">
+                  </div>
+                </div>
+              </div>
+
+              <div id="runButton" style="font-family: Voltaire; width: 100%; height: 40px; line-height: 40px; background-color: rgb(143,181,164); color: black; cursor: pointer; font-size: 18px; position: relative">
+
+                <div id="runSuccessPrompt" style=""><i class="icon-ok"></i>PROGRAM RAN SUCCESSFULLY
+                  <div title="Generate new random numbers" id="currentSeedButton" class="seedButton" style="position: absolute; top: 8px; right: 20px; user-select:none; visibility: visible;">
+                  <i class="material-icons" style="font-size: 24px; opacity: 0.5">casino</i>
+                  </div>
+                </div>
+
+                <span id="emptyCodePrompt">
+                  <i class="icon-down-hand"></i> WRITE OR PASTE CODE HERE
+                </span>
+
+                <span id="parseErrorPrompt">
+                  WAITING FOR A VALID PROGRAM...
+                </span>
+
+                <span id="runtimeErrorPrompt">
+                  <i class="icon-attention"></i>SOMETHING NEEDS FIXING
+                </span>
+
+
+                <div id="compError" style="position: absolute; top: 0px; left: 0px; line-height: 40px; background-color: tomato; color: #fff; width: 100%; height: 100%; font-size: 16px; opacity: 0; transition: opacity 0.5s; overflow: hidden; pointer-events:none">
+                  <div id="compErrorPrompt" style="text-overflow: ellipsis"></div>
+                </div>
+              </div>
+
+              <div id="editorWrapper" style="position: relative; width: 100%; height: 100%; overflow: hidden; font-size: 14px">
+                  <div id="comppad" style="text-align: left; font-weight: bold; font-family: Ubuntu Mono"></div>
+              </div>
+            </div>
+
+
+            <script type="text/javascript">
+
+              document.getElementById("tempo").value = 90;
+              Tone.Transport.bpm.value = 90;
+              Tone.Transport.loop = true;
+              Tone.Transport.loopStart = "0:0:0";
+              Tone.Transport.loopEnd = "4:0:0";
+
+              function togglePlay() {
+                if (Tone.Transport.state == "stopped") {
+                  Tone.Transport.start("+0.1");
+                  document.getElementById("playbutton").innerHTML = "<i class='icon-stop'>&nbsp;</i>";
+
+                  document.getElementById("drummerHead").classList.add("drumBob");
+                  document.getElementById("keysHead").classList.add("keysBob");
+                  document.getElementById("bassHead").classList.add("bassBob");
+
+                } else {
+                  Tone.Transport.stop();
+                  document.getElementById("playbutton").innerHTML = "<i class='icon-play'>&nbsp;</i>";
+
+                  document.getElementById("drummerHead").classList.remove("drumBob");
+                  document.getElementById("keysHead").classList.remove("keysBob");
+                  document.getElementById("bassHead").classList.remove("bassBob");
+
+                  keysPlayer.stopAll();
+                  bassPlayer.stopAll();
+                }
+
+              }
+
+              document.getElementById("playbutton").addEventListener("click", togglePlay);
+              document.getElementById("getStartedWrapper").addEventListener("click", function(e) {
+                  document.getElementById("getStartedWrapper").style.display = "none";
+                  document.getElementById("playButtonWrapper").style.display = "block";
+                  togglePlay();
+              });
+            </script>
+
+
+            <script type="text/javascript" src="js/tutorialLibrary.js"></script>
+            <script type="text/javascript" src="js/tonalTutorialLibrary.js"></script>
+            <script type="text/javascript" src="js/drumLibrary.js"></script>
+            <script type="text/javascript" src="js/keysLibrary.js"></script>
+            <script type="text/javascript" src="js/bassLibrary.js"></script>
+            <script type="text/javascript">
+              var codemirror = CodeMirror(document.getElementById("comppad"), {
+                value: "",
+                mode:  "javascript",
+                theme: "material",
+                keyMap: "sublime",
+                lineNumbers: true,
+                viewportMargin: Infinity,
+                tabSize: 2,
+                enableSearchTools: true,
+                highlightMatches: true,
+              });
+
+
+              var documents = {
+                drumsDocument: codemirror.getDoc(),
+                keysDocument: new CodeMirror.Doc("", "javascript", 0),
+                bassDocument: new CodeMirror.Doc("", "javascript", 0)
+              };
+
+
+              var PROGRAMMER = new Programmer();
+
+              var selectedPart = "";
+
+              var drumSamples =
+                { "samples" : [
+                    { "midi":36, "path": "sounds/drums/kick.mp3"},
+                    { "midi":37, "path": "sounds/drums/snare2.mp3"},
+                    { "midi":38, "path": "sounds/drums/rim.mp3"},
+                    { "midi":39, "path": "sounds/drums/closedhat.mp3"},
+                    { "midi":40, "path": "sounds/drums/openhat.mp3"},
+                    { "midi":41, "path": "sounds/drums/shaker1.mp3"},
+                    { "midi":42, "path": "sounds/drums/floor.mp3"},
+                    { "midi":43, "path": "sounds/drums/tom.mp3"},
+                    { "midi":44, "path": "sounds/drums/tamb.mp3"},
+                    { "midi":45, "path": "sounds/drums/cowbell2.mp3"},
+                    { "midi":46, "path": "sounds/drums/ridebell.mp3"},
+                    { "midi":47, "path": "sounds/drums/ridecymbal2.mp3"},
+                    { "midi":48, "path": "sounds/drums/crash1.mp3"},
+                  ]
+                };
+
+              var drumPaths = drumSamples.samples.map(function(sample) {
+                return sample.path;
+              });
+
+              var drumPlayer = new Tone.MultiPlayer(drumPaths, function() {
+                reportSamplesLoaded();
+              }).toMaster();
+
+              drumPlayer.volume.value = -6;
+
+
+              var drumPart = new Tone.Part(function(time, value) {
+                drumPlayer.start(
+                  value.row,
+                  time,
+                  0,
+                  "1:0:0",
+                  0,
+                  value.vol);
+              },
+              []).start(0);
+
+              var drumScore = new Score();
+              var laneLabels = [
+                "Kick",
+                "Snare",
+                "Rim",
+                "Closed Hat",
+                "Open Hat",
+                "Shaker",
+                "Floor Tom",
+                "Tom",
+                "Tamb",
+                "Cowbell",
+                "Ride Bell",
+                "Ride",
+                "Crash"
+              ];
+              drumScore.init(laneLabels.length, drumPart, laneLabels);
+
+
+
+              function nearest(val, arr) {
+                var closest = Number.MAX_VALUE;
+
+                for (var i = 0; i < arr.length; i++) {
+                  var possibility = arr[i];
+                  var distToClosest = Math.abs(val - closest);
+                  var distToPossibility = Math.abs(val - possibility);
+                  if (distToPossibility <= distToClosest) {
+                    closest = possibility;
+                  }
+                }
+
+                return closest;
+              }
+
+              function nearestSampleAndSemitoneOffset(midi, samples) {
+                var midiNotes = samples.map(function(e) { return e.midi; });
+                var nearestMidi = nearest(midi, midiNotes);
+
+                return { val: nearestMidi, offset: midi - nearestMidi };
+              }
+
+
+              var keysSamples =
+                { "samples" : [
+                    { "midi":48, "path": "sounds/keys2/c2.mp3"},
+                    { "midi":60, "path": "sounds/keys2/c3.mp3"},
+                  ]
+                };
+
+
+              var keysPaths = {};
+              keysSamples.samples.forEach(function(sample) {
+                keysPaths[sample.midi + ""] = sample.path;
+              });
+
+              var keysPlayer = new Tone.MultiPlayer(keysPaths, function() {
+                reportSamplesLoaded();
+              }).toMaster();
+              keysPlayer.fadeOut = 0.1;
+              keysPlayer.volume.value = -6;
+
+              var keysPart = new Tone.Part(function(time, value) {
+                var wantedMidi = value.row + 36;
+                var duration = "0:1:0 * " + value.length;
+                var nearestNoteAndOffset
+                  = nearestSampleAndSemitoneOffset(wantedMidi, keysSamples.samples);
+
+                keysPlayer.start(
+                  nearestNoteAndOffset.val,
+                  time,
+                  0, // offset
+                  duration,
+                  nearestNoteAndOffset.offset,
+                  value.vol);
+
+              },
+              []).start(0);
+
+              var keysScore = new Score();
+              keysScore.init(48, keysPart);
+
+              var bassSamples =
+                { "samples" : [
+                    { "midi": 48, "path": "sounds/bass2/c2comp2.mp3"},
+                    { "midi": 60, "path": "sounds/bass2/c3.mp3"},
+                  ]
+                };
+
+
+              var bassPaths = {};
+              bassSamples.samples.forEach(function(sample) {
+                bassPaths[sample.midi + ""] = sample.path;
+              });
+
+              var bassPlayer = new Tone.MultiPlayer(bassPaths, function() {
+                reportSamplesLoaded();
+              }).toMaster();
+              bassPlayer.fadeOut = 0.1;
+              bassPlayer.volume.value = -11;
+
+              var bassPart = new Tone.Part(function(time, value) {
+                var wantedMidi = value.row + 36;
+                var duration = "0:1:0 * " + value.length;
+                var nearestNoteAndOffset
+                  = nearestSampleAndSemitoneOffset(wantedMidi, bassSamples.samples);
+
+                bassPlayer.start(
+                  nearestNoteAndOffset.val,
+                  time,
+                  0, // offset
+                  duration,
+                  nearestNoteAndOffset.offset,
+                  value.vol);
+
+              },
+              []).start(0);
+
+
+              var bassScore = new Score();
+              bassScore.init(36, bassPart);
+
+              var instrumentsLoaded = 0;
+              function reportSamplesLoaded() {
+                instrumentsLoaded++;
+                if (instrumentsLoaded === 3) {
+                  document.getElementById("loadingIndicator").style.display = "none";
+                  document.getElementById("getStartedWrapper").style.display = "block";
+                }
+              }
+
+
+              function setupCanvii() {
+                setupCanvas(document.getElementById('scoreCanvas'));
+                setupCanvas(document.getElementById('drumOverviewCanvas'));
+                setupCanvas(document.getElementById('keysOverviewCanvas'));
+                setupCanvas(document.getElementById('bassOverviewCanvas'));
+              }
+
+              setupCanvii();
+
+              var DPR = window.devicePixelRatio;
+              setInterval(updateDPR, 1000);
+
+              function updateDPR() {
+                if (DPR != window.devicePixelRatio) {
+                  DPR = window.devicePixelRatio;
+                  setupCanvii();
+                  scoreRenderer.onBackingScaleChanged();
+                  drumOverviewRenderer.onBackingScaleChanged();
+                  keysOverviewRenderer.onBackingScaleChanged();
+                  bassOverviewRenderer.onBackingScaleChanged();
+                }
+              }
+
+
+              var scoreRenderer = new ScoreRenderer();
+
+              var drumOverviewRenderer = new ScoreRenderer();
+              var keysOverviewRenderer = new ScoreRenderer();
+              var bassOverviewRenderer = new ScoreRenderer();
+
+              function runAllPrograms() {
+                selectDrums(false);
+                selectKeys(false);
+                selectBass(false);
+                selectDrums(false);
+
+                scoreRenderer.update();
+                drumOverviewRenderer.update();
+                keysOverviewRenderer.update();
+                bassOverviewRenderer.update();
+              }
+
+              function loadDefaultPrograms() {
+                documents.drumsDocument.setValue(DRUM_LIBRARY[1].program);
+                documents.keysDocument.setValue(KEYS_LIBRARY[1].program);
+                documents.bassDocument.setValue(BASS_LIBRARY[1].program);
+                documents.drumsDocument.clearHistory();
+                documents.keysDocument.clearHistory();
+                documents.bassDocument.clearHistory();
+              }
+
+              window.onload = function() {
+                loadDefaultPrograms();
+                runAllPrograms();
+              }
+
+              drumOverviewRenderer.init(drumScore, 240, 72, "#e9c94c", false, document.getElementById('drumOverviewCanvas'));
+              keysOverviewRenderer.init(keysScore, 240, 72, "#e5733d", true, document.getElementById('keysOverviewCanvas'));
+              bassOverviewRenderer.init(bassScore, 240, 72, "#90ab59", true, document.getElementById('bassOverviewCanvas'));
+
+              document.getElementById("drumsButton").addEventListener("click", function() {selectDrums(true)});
+              document.getElementById("keysButton").addEventListener("click", function() {selectKeys(true)});
+              document.getElementById("bassButton").addEventListener("click", function() {selectBass(true)});
+
+              document.getElementById("drumMuteButton").addEventListener("click", toggleDrumMute);
+              document.getElementById("keysMuteButton").addEventListener("click", toggleKeysMute);
+              document.getElementById("bassMuteButton").addEventListener("click", toggleBassMute);
+
+              document.getElementById("drumSeedButton").addEventListener("click", reseedDrums);
+              document.getElementById("keysSeedButton").addEventListener("click", reseedKeys);
+              document.getElementById("bassSeedButton").addEventListener("click", reseedBass);
+
+              document.getElementById("currentSeedButton").addEventListener("click", reseedCurrent);
+
+              function toggleDrumMute(e) {
+                e.stopPropagation();
+                drumScore.toggleMute();
+                document.getElementById("drumMuteButton").innerHTML = drumScore.isMuted()
+                  ? '<i class="icon-volume-off-1"></i>'
+                  : '<i class="icon-volume-low"></i>';
+                drumPlayer.mute = drumScore.isMuted();
+              }
+
+              function toggleKeysMute(e) {
+                e.stopPropagation();
+                keysScore.toggleMute();
+                document.getElementById("keysMuteButton").innerHTML = keysScore.isMuted()
+                  ? '<i class="icon-volume-off-1"></i>'
+                  : '<i class="icon-volume-low"></i>';
+                keysPlayer.mute = keysScore.isMuted();
+              }
+
+              function toggleBassMute(e) {
+                e.stopPropagation();
+                bassScore.toggleMute();
+                document.getElementById("bassMuteButton").innerHTML = bassScore.isMuted()
+                  ? '<i class="icon-volume-off-1"></i>'
+                  : '<i class="icon-volume-low"></i>';
+                bassPlayer.mute = bassScore.isMuted();
+
+              }
+
+              function reseedDrums() {
+                drumScore.reseed();
+                tryToRunCode();
+              }
+
+              function reseedKeys() {
+                keysScore.reseed();
+                tryToRunCode();
+              }
+
+              function reseedBass() {
+                bassScore.reseed();
+                tryToRunCode();
+              }
+
+              function reseedCurrent() {
+                if (selectedPart == "drums") {
+                  reseedDrums();
+                } else if (selectedPart == "bass") {
+                  reseedBass();
+                } else if (selectedPart == "keys") {
+                  reseedKeys();
+                }
+              }
+
+              document.getElementById("drumOverviewCanvas").addEventListener("click", function() {selectDrums(true)});
+              document.getElementById("keysOverviewCanvas").addEventListener("click", function() {selectKeys(true)});
+              document.getElementById("bassOverviewCanvas").addEventListener("click", function() {selectBass(true)});
+
+              document.getElementById("drumCharacter").addEventListener("click", function() {selectDrums(true)});
+              document.getElementById("keysCharacter").addEventListener("click", function() {selectKeys(true)});
+              document.getElementById("bassCharacter").addEventListener("click", function() {selectBass(true)});
+
+              function selectDrums(animate) {
+                var previouslySelectedPart = selectedPart;
+                selectedPart = "drums";
+                hideLibraryProgram();
+                setupMenu(DRUM_LIBRARY);
+                scoreRenderer.init(drumScore, 720, 300, "#e9c94c", false, document.getElementById('scoreCanvas'));
+                document.getElementById("keysButton").classList.remove("selected");
+                document.getElementById("bassButton").classList.remove("selected");
+                document.getElementById("drumsButton").classList.add("selected");
+                document.getElementById("score").style.color = "#e9c94c";
+                document.getElementById("mainPlayhead").style.backgroundColor = "#e9c94c";
+                document.getElementById("libraryButton").style.color = "#e9c94c";
+                document.getElementById("library").style.backgroundColor = "#e9c94c";
+                document.getElementById("editorWrapper").style.backgroundColor = "#e9c94c";
+                if (animate && (previouslySelectedPart !== selectedPart)) {
+                  var startTranslateState = 'translate(0px,0px)';
+                  var endTranslateState = 'translate(480px,0px)';
+                  var translateInterpolator = d3.interpolateString(startTranslateState, endTranslateState);
+
+                  d3.select("#comppad")
+                      .transition()
+                      .duration(500)
+                      .styleTween('transform', function (d) {
+                          return translateInterpolator;
+                      })
+                      .each("end", function() {
+                        codemirror.swapDoc(documents.drumsDocument);
+                        PROGRAMMER.setScore(drumScore);
+                        tryToRunCode();
+                        d3.select("#comppad").style("opacity", 0);
+                        d3.select("#comppad").style("transform", "translate(0px,0px)");
+                        d3.select("#comppad").transition().duration(500).style("opacity",1);
+                  })
+                } else {
+                  codemirror.swapDoc(documents.drumsDocument);
+                  PROGRAMMER.setScore(drumScore);
+                  tryToRunCode();
+                }
+              }
+
+              function selectKeys(animate) {
+                var previouslySelectedPart = selectedPart;
+                selectedPart = "keys";
+                hideLibraryProgram();
+                setupMenu(KEYS_LIBRARY);
+                scoreRenderer.init(keysScore, 720, 300, "#e5733d", true, document.getElementById('scoreCanvas'));
+                document.getElementById("keysButton").classList.add("selected");
+                document.getElementById("bassButton").classList.remove("selected");
+                document.getElementById("drumsButton").classList.remove("selected");
+                document.getElementById("score").style.color = "#e5733d";
+                document.getElementById("mainPlayhead").style.backgroundColor = "#e5733d";
+                document.getElementById("libraryButton").style.color = "#e5733d";
+                document.getElementById("library").style.backgroundColor = "#e5733d";
+                document.getElementById("editorWrapper").style.backgroundColor = "#e5733d";
+                if (animate && (previouslySelectedPart !== selectedPart)) {
+                  var startTranslateState = 'translate(0px,0px)';
+                  var endTranslateState = 'translate(480px,0px)';
+                  var translateInterpolator = d3.interpolateString(startTranslateState, endTranslateState);
+
+                  d3.select("#comppad")
+                      .transition()
+                      .duration(500)
+                      .styleTween('transform', function (d) {
+                          return translateInterpolator;
+                      })
+                      .each("end", function() {
+                        codemirror.swapDoc(documents.keysDocument);
+                        PROGRAMMER.setScore(keysScore);
+                        tryToRunCode();
+                        d3.select("#comppad").style("opacity", 0);
+                        d3.select("#comppad").style("transform", "translate(0px,0px)");
+                        d3.select("#comppad").transition().duration(500).style("opacity",1);
+                  })
+                } else {
+                  codemirror.swapDoc(documents.keysDocument);
+                  PROGRAMMER.setScore(keysScore);
+                  tryToRunCode();
+                }
+              }
+
+              function selectBass(animate) {
+                var previouslySelectedPart = selectedPart;
+                selectedPart = "bass";
+                hideLibraryProgram();
+                setupMenu(BASS_LIBRARY);
+                scoreRenderer.init(bassScore, 720, 300, "#90ab59", true, document.getElementById('scoreCanvas'));
+                document.getElementById("keysButton").classList.remove("selected");
+                document.getElementById("bassButton").classList.add("selected");
+                document.getElementById("drumsButton").classList.remove("selected");
+                document.getElementById("score").style.color = "#90ab59";
+                document.getElementById("mainPlayhead").style.backgroundColor = "#90ab59";
+                document.getElementById("libraryButton").style.color = "#90ab59";
+                document.getElementById("library").style.backgroundColor = "#90ab59";
+                document.getElementById("editorWrapper").style.backgroundColor = "#90ab59";
+                if (animate && (previouslySelectedPart !== selectedPart)) {
+                  var startTranslateState = 'translate(0px,0px)';
+                  var endTranslateState = 'translate(480px,0px)';
+                  var translateInterpolator = d3.interpolateString(startTranslateState, endTranslateState);
+
+                  d3.select("#comppad")
+                      .transition()
+                      .duration(500)
+                      .styleTween('transform', function (d) {
+                          return translateInterpolator;
+                      })
+                      .each("end", function() {
+                        codemirror.swapDoc(documents.bassDocument);
+                        PROGRAMMER.setScore(bassScore);
+                        tryToRunCode();
+                        d3.select("#comppad").style("opacity", 0);
+                        d3.select("#comppad").style("transform", "translate(0px,0px)");
+                        d3.select("#comppad").transition().duration(500).style("opacity",1);
+                  })
+                } else {
+                  codemirror.swapDoc(documents.bassDocument);
+                  PROGRAMMER.setScore(bassScore);
+                  tryToRunCode();
+                }
+              }
+
+              function setupMenu(library) {
+                var menu = document.getElementById("libraryMenu");
+
+                menu.innerHTML = "";
+
+                var libraryWithTutorialMaterial = library === DRUM_LIBRARY
+                  ? TUTORIAL_LIBRARY.concat(library)
+                  : TUTORIAL_LIBRARY.concat(TONAL_TUTORIAL_LIBRARY).concat(library);
+
+                libraryWithTutorialMaterial.forEach(function(e) {
+                  var item = document.createElement("div");
+                  var itemName = document.createElement("span");
+                  var loadButton = document.createElement("button");
+                  loadButton.classList.add("inlineLibraryButton");
+                  loadButton.innerHTML = "Load";
+
+                  item.className = "libraryMenuItem";
+                  itemName.innerHTML = e.name;
+                  item.appendChild(itemName);
+                  item.appendChild(loadButton);
+                  item.addEventListener("click", function() {
+                    showLibraryProgram(e.program);
+                  });
+                  loadButton.addEventListener("click", function(evt) {
+                    evt.stopPropagation();
+                    loadLibraryProgram(e.program);
+
+                  })
+                  menu.appendChild(item);
+                });
+              }
+
+              setupMenu(DRUM_LIBRARY);
+
+              function showLibraryProgram(program) {
+                codemirrorLibrary.setValue(program);
+                document.getElementById("libraryDrawer").style.left = "-480px";
+                var loadButton = document.createElement("button");
+                loadButton.classList.add("libraryButton");
+                loadButton.classList.add("libraryHeaderButton");
+                loadButton.innerHTML = "Load";
+                loadButton.addEventListener("click", function(evt) {
+                  evt.stopPropagation();
+                  loadLibraryProgram(program);
+
+                })
+
+                document.getElementById("libraryButton").innerHTML = "";
+
+                var backToExamplesSpan = document.createElement("span");
+                backToExamplesSpan.innerHTML = "<i class='material-icons' style='font-size:18px; vertical-align: middle'>arrow_back</i> BACK TO EXAMPLES";
+
+                document.getElementById("libraryButton").appendChild(backToExamplesSpan);
+                document.getElementById("libraryButton").appendChild(loadButton);
+              }
+
+              function loadLibraryProgram(program) {
+                codemirror.doc.setValue(program);
+              }
+
+              function hideLibraryProgram() {
+                document.getElementById("libraryDrawer").style.left = "0px";
+                document.getElementById("libraryButton").innerHTML = "EXAMPLE PROGRAMS";
+              }
+
+              document.getElementById("libraryButton").addEventListener("click", hideLibraryProgram);
+            </script>
+
+						<script type="text/javascript">
+              codemirror.on("change", tryToRunCode);
+              var SYNTAX_ERROR_MARKER;
+              var LINE_ERROR_MARKER;
+              var HOUSTON_WE_HAVE_A_PARSING_PROBLEM;
+              var HOUSTON_WE_HAVE_A_RUNTIME_PROBLEM;
+
+							var codemirrorLibrary = CodeMirror(document.getElementById("libraryCodemirror"), {
+							  value: "",
+							  mode: "javascript",
+							  theme: "material",
+							  lineNumbers: true,
+							  viewportMargin: Infinity,
+                tabSize: 2,
+                readOnly: true,
+                noCursor: true
+							});
+
+              function tryToRunCode() {
+                if (selectedPart == "drums") {
+                  drumProgram = codemirror.doc.getValue();
+                  document.getElementById("drumSeedButton").style.visibility =
+                    drumProgram.indexOf("Math.random") == -1
+                      ? "hidden"
+                      : "visible";
+                }
+
+                if (selectedPart == "keys") {
+                  keysProgram = codemirror.doc.getValue();
+                  document.getElementById("keysSeedButton").style.visibility =
+                    keysProgram.indexOf("Math.random") == -1
+                      ? "hidden"
+                      : "visible";
+                }
+
+                if (selectedPart == "bass") {
+                  bassProgram = codemirror.doc.getValue();
+                  document.getElementById("bassSeedButton").style.visibility =
+                    bassProgram.indexOf("Math.random") == -1
+                      ? "hidden"
+                      : "visible";
+                }
+
+              document.getElementById("currentSeedButton").style.visibility =
+                codemirror.doc.getValue().indexOf("Math.random") == -1
+                  ? "hidden"
+                  : "visible";
+
+                HOUSTON_WE_HAVE_A_RUNTIME_PROBLEM = false;
+                HOUSTON_WE_HAVE_A_PARSING_PROBLEM = false;
+
+                var programText = codemirror.doc.getValue();
+                if (SYNTAX_ERROR_MARKER) { SYNTAX_ERROR_MARKER.clear(); }
+                if (LINE_ERROR_MARKER) { codemirror.doc.removeLineClass(
+                  LINE_ERROR_MARKER, "gutter", "lineErrorHighlight");}
+                try {
+                  PROGRAMMER.runCode("RESET();\n" + programText);
+                } catch(e) {
+                  var errorText = (e + "");
+                  if (errorText.indexOf("SyntaxError:") != -1) {
+                    var linecolregex = /(\d+):(\d+)/;
+                    var match = errorText.match(linecolregex);
+                    var line = parseInt(match[1])
+                    var col = parseInt(match[2])
+
+                    SYNTAX_ERROR_MARKER = codemirror.doc.markText(
+                      {line: line-2, ch: col},
+                      {line: line-2, ch: col+1},
+                      {className: "syntaxErrorHighlight"});
+
+                    LINE_ERROR_MARKER = codemirror.doc.addLineClass(
+                      line-2,
+                      "gutter",
+                      "lineErrorHighlight"
+                    );
+
+
+                    HOUSTON_WE_HAVE_A_PARSING_PROBLEM = e;
+                  }
+                  else {
+                    var referenceErrorRegex = /ReferenceError: (.*) is not defined/;
+                    var referenceErrorMatch = errorText.match(referenceErrorRegex);
+                    if (referenceErrorMatch) {
+                      HOUSTON_WE_HAVE_A_RUNTIME_PROBLEM =
+                        "\"" + referenceErrorMatch[1] + "\" is used but never defined."
+                    }
+                    else {
+                      HOUSTON_WE_HAVE_A_RUNTIME_PROBLEM = e;
+                    }
+                  }
+                }
+              }
+
+              function dismissError() {
+                HOUSTON_WE_HAVE_A_RUNTIME_PROBLEM = false;
+                HOUSTON_WE_HAVE_A_PARSING_PROBLEM = false;
+              }
+
+
+							function updateCodePrompts() {
+								var currentCodeSnippet = codemirror.doc.getValue();
+								if ((currentCodeSnippet == undefined) || currentCodeSnippet.length == 0) {
+									document.getElementById("emptyCodePrompt").style.display = "initial";
+									document.getElementById("runSuccessPrompt").style.display = "none";
+									document.getElementById("parseErrorPrompt").style.display = "none";
+                  document.getElementById("runtimeErrorPrompt").style.display = "none";
+                  document.getElementById("compError").style.opacity = 0;
+								} else if (HOUSTON_WE_HAVE_A_PARSING_PROBLEM && !HOUSTON_WE_HAVE_A_RUNTIME_PROBLEM) {
+									document.getElementById("emptyCodePrompt").style.display = "none";
+									document.getElementById("runSuccessPrompt").style.display = "none";
+									document.getElementById("parseErrorPrompt").style.display = "initial";
+                  document.getElementById("runtimeErrorPrompt").style.display = "none";
+                  document.getElementById("compError").style.opacity = 0;
+								} else if (HOUSTON_WE_HAVE_A_RUNTIME_PROBLEM) {
+                  document.getElementById("emptyCodePrompt").style.display = "none";
+                  document.getElementById("runSuccessPrompt").style.display = "none";
+                  document.getElementById("parseErrorPrompt").style.display = "none";
+                  document.getElementById("runtimeErrorPrompt").style.display = "initial";
+                  document.getElementById("compErrorPrompt").innerHTML = HOUSTON_WE_HAVE_A_RUNTIME_PROBLEM;
+                  document.getElementById("compError").style.opacity = 1;
+                } else {
+                  document.getElementById("emptyCodePrompt").style.display = "none";
+                  document.getElementById("runSuccessPrompt").style.display = "initial";
+                  document.getElementById("parseErrorPrompt").style.display = "none";
+                  document.getElementById("runtimeErrorPrompt").style.display = "none";
+                  document.getElementById("compError").style.opacity = 0;
+                }
+							}
+
+              function updatePlayheads() {
+                var progress = Tone.Transport.progress;
+                document.getElementById("drumOverviewCanvasPlayhead").style.transform =
+                  "translateX(" + (progress * 240) + "px)";
+                document.getElementById("keysOverviewCanvasPlayhead").style.transform =
+                  "translateX(" + (progress * 240) + "px)";
+                document.getElementById("bassOverviewCanvasPlayhead").style.transform =
+                  "translateX(" + (progress * 240) + "px)";
+                document.getElementById("mainPlayhead").style.transform =
+                  "translateX(" + (progress * 720) + "px)";
+              }
+
+							d3.timer(updateCodePrompts);
+              d3.timer(updatePlayheads);
+						</script>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
