@@ -340,6 +340,24 @@
 
 
             <script type="text/javascript">
+              function makeGestureOnElementResumeAudioContext(element) {
+                    function resumeAudioContext() {
+                      Tone.context.resume().then(function() {
+                        element.removeEventListener("touchstart", resumeAudioContext, true);
+                        element.removeEventListener("touchend", resumeAudioContext, true);
+                        element.removeEventListener("mousedown", resumeAudioContext, true);
+                        element.removeEventListener("mouseup", resumeAudioContext, true);
+                        element.removeEventListener("click", resumeAudioContext, true);
+                      });
+                    }
+
+                    element.addEventListener("touchstart", resumeAudioContext, true);
+                    element.addEventListener("touchend", resumeAudioContext, true);
+                    element.addEventListener("mousedown", resumeAudioContext, true);
+                    element.addEventListener("mouseup", resumeAudioContext, true);
+                    element.addEventListener("click", resumeAudioContext, true);
+              }
+              makeGestureOnElementResumeAudioContext(document.body);
 
               document.getElementById("tempo").value = 90;
               Tone.Transport.bpm.value = 90;
