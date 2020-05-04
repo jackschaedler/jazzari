@@ -370,9 +370,15 @@
                   Tone.Transport.start("+0.1");
                   document.getElementById("playbutton").innerHTML = "<i class='icon-stop'>&nbsp;</i>";
 
-                  document.getElementById("drummerHead").classList.add("drumBob");
-                  document.getElementById("keysHead").classList.add("keysBob");
-                  document.getElementById("bassHead").classList.add("bassBob");
+                  if (!drumScore.isMuted()) {
+                    document.getElementById("drummerHead").classList.add("drumBob");
+                  }
+                  if (!keysScore.isMuted()) {
+                    document.getElementById("keysHead").classList.add("keysBob");
+                  }
+                  if (!bassScore.isMuted()) {
+                    document.getElementById("bassHead").classList.add("bassBob");
+                  }
 
                 } else {
                   Tone.Transport.stop();
@@ -680,6 +686,9 @@
                   ? '<i class="icon-volume-off-1"></i>'
                   : '<i class="icon-volume-low"></i>';
                 drumPlayer.mute = drumScore.isMuted();
+                if (Tone.Transport.state === 'started') {
+                  document.getElementById("drummerHead").classList.toggle("drumBob");
+                }
               }
 
               function toggleKeysMute(e) {
@@ -689,6 +698,9 @@
                   ? '<i class="icon-volume-off-1"></i>'
                   : '<i class="icon-volume-low"></i>';
                 keysPlayer.mute = keysScore.isMuted();
+                if (Tone.Transport.state === 'started') {
+                  document.getElementById("keysHead").classList.toggle("keysBob");
+                }
               }
 
               function toggleBassMute(e) {
@@ -698,6 +710,9 @@
                   ? '<i class="icon-volume-off-1"></i>'
                   : '<i class="icon-volume-low"></i>';
                 bassPlayer.mute = bassScore.isMuted();
+                if (Tone.Transport.state === 'started') {
+                  document.getElementById("bassHead").classList.toggle("bassBob");
+                }
 
               }
 
